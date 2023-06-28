@@ -1,6 +1,7 @@
 import Usuario from "./Usuario.models.js";
 import Cuenta from "./Cuenta.models.js";
 import Beneficio from "./Beneficio.models.js";
+import BeneficioUsuario from "./BeneficioUsuario.models.js";
 
 //relación 1 a muchos entre Usuario - Cuenta
 Usuario.hasMany(Cuenta, {
@@ -17,10 +18,10 @@ Cuenta.belongsTo(Usuario, {
 
 Usuario.belongsToMany(Beneficio, {
     as: "beneficios",
-    through: "beneficioUsuario"
+    through: BeneficioUsuario,
 });
 
 Beneficio.belongsToMany(Usuario, {
     as: "beneficiarios",
-    through: "beneficioUsuario",
+    through: BeneficioUsuario,
 });

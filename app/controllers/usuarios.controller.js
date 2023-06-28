@@ -16,7 +16,7 @@ export const getUsuarios = async (req, res) => {
                 {
                     model: Beneficio,
                     as: "beneficios",
-                    through: { attributes: [] },
+                    through: { attributes: ["estado"] },
                 },
             ],
 

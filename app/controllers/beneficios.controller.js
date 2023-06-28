@@ -3,7 +3,14 @@ import Beneficio from "../models/Beneficio.models.js";
 
 export const getBeneficios = async (req, res) => {
     try {
-        const beneficios = await Beneficio.findAll();
+        const beneficios = await Beneficio.findAll({
+            include: {
+                model: Usuario,
+                as: "beneficiarios",
+                through: { attributes: ["estado"] },
+                attributes: ["id", "nombre", "email"]
+            },
+        });
         res.send({ code: 200, data: beneficios});
     } catch (error) {
         res.status(500).send({
@@ -56,7 +63,11 @@ export const addAsociacion = async (req, res) => {
             });
         }
 
-        await usuario.addBeneficio(beneficio);
+        await usuario.addBeneficio(beneficio, {
+            through: {
+                estado: true
+            }
+        });
 
         res.status(201).send({
             code: 201,
